@@ -4,7 +4,7 @@ listado y recuperación de instancias de películas a través de una API.
 """
 
 from typing import List
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from movies.movie import Movie
 
 class GetMovieById(BaseModel):
