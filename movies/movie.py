@@ -35,6 +35,11 @@ class Movie(BaseModel):
         con.close()
         return movie
 
+    @staticmethod
+    def create_table():
+        # Código para crear la tabla en la base de datos
+        pass
+
     @classmethod
     def get_by_title(cls, title: str) -> "Movie":
         """Recupera una película por su título desde la base de datos."""
