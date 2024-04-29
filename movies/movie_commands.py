@@ -23,7 +23,7 @@ class CreateMovieCommand(BaseModel):
 
     def execute(self) -> Movie:
         """
-        Ejecuta el comando para crear una nueva película o devolver una existente basada en el título.
+        Ejecuta el comando para crear una nueva película.
 
         Returns:
             Movie: La película creada o encontrada.
