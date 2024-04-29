@@ -1,3 +1,12 @@
+"""
+Este módulo contiene comandos que operan sobre la entidad Movie, facilitando la creación,
+listado y recuperación de instancias de películas a través de una API.
+"""
+"""
+Este módulo contiene comandos que operan sobre la entidad Movie, facilitando la creación,
+listado y recuperación de instancias de películas a través de una API.
+"""
+
 from typing import List
 from pydantic import BaseModel
 from movies.movie import Movie
@@ -28,10 +37,7 @@ class CreateMovieCommand(BaseModel):
             movie = Movie(
                 title=self.title, duration=self.duration, category=self.category
             ).save()
-            return movie
-        else:
-            return movie
-
+        return movie
 
 class ListMovies(BaseModel):
     """
