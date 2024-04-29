@@ -7,6 +7,25 @@ from typing import List
 from pydantic import BaseModel
 from movies.movie import Movie
 
+class GetMovieById(BaseModel):
+    """
+    Comando para obtener una  película.
+
+    Attributes:
+        modelo (BaseModel): El modelo.
+    """
+
+    id: int = Field(..., description="The ID of the movie")
+
+    def execute(self):
+        """
+        Ejecuta el comando para obtener una  película.
+
+        Returns:
+            Movie: La película creada o encontrada.
+        """
+        return Movie.get_by_id(self.id)
+
 
 class CreateMovieCommand(BaseModel):
     """
