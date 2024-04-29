@@ -1,0 +1,39 @@
+stages:
+  - setup
+  - lint
+  - test
+  - metrics
+  - security
+
+setup:
+  stage: setup
+  script:
+    - ./scripts/configure-dependencies.sh
+
+lint:
+  stage: lint
+  script:
+    - ./scripts/check_quality_pylint.sh
+    - ./scripts/check_quality_flake8.sh
+    - ./scripts/check_quality_ruff.sh
+
+format:
+  stage: lint
+  script:
+    - ./scripts/format_code_black.sh
+
+test:
+  stage: test
+  script:
+    - ./scripts/run_tests.sh
+
+metrics:
+  stage: metrics
+  script:
+    - ./scripts/check_test_coverage.sh
+
+security:
+  stage: security
+  script:
+    - ./scripts/check_quality_bandit.sh
+    - ./scripts/check_quality_radon.sh
