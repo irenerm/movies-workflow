@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Format code with Black
-        run: ./scripts/format_code_black.sh
+        run: ./scripts/format_code.sh
 
   test:
     needs: setup
