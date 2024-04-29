@@ -40,4 +40,4 @@ def list_movies():
 
 
 if __name__ == "__main__":
-    app.run(debug=os.getenv('FLASK_DEBUG', 'False') == 'True')
+    app.run(debug=os.getenv("FLASK_DEBUG", "False") == "True")
