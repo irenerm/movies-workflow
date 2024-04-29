@@ -1,3 +1,9 @@
+"""
+Este módulo contiene pruebas unitarias para verificar la funcionalidad asociada con
+la gestión de películas en la aplicación. Esto incluye la creación de nuevas películas,
+la verificación de películas existentes, y el listado de todas las películas.
+"""
+
 import pytest
 from movies.movie import Movie
 from movies.movie_commands import CreateMovieCommand, ListMovies
@@ -25,7 +31,9 @@ def test_create_movie_already_exists():
     Movie(title="Avatar", duration=178, category="Action").save()
     cmd = CreateMovieCommand(title="Avatar", duration=178, category="Action")
     movie = cmd.execute()
-    # Asertar que la película obtenida es la misma que la existente.
+    db_movie = Movie.get_by_id(movie.id)
+    assert db_movie is not None
+    assert db_movie.id == movie.id
 
 def test_list_movies():
     """Test para verificar que la lista de películas se recupera correctamente."""
