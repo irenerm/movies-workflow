@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Run pytest for all test files
-pytest
+cd $(dirname "$0")/..
+pytest tests/
