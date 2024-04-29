@@ -8,6 +8,7 @@ from movies.movie_commands import CreateMovieCommand, GetMovieById, ListMovies
 
 app = Flask(__name__)
 
+
 @app.route("/create-movie/", methods=["POST"])
 def create_movie():
     """
@@ -16,6 +17,7 @@ def create_movie():
     cmd = CreateMovieCommand(**request.json)
     movie = cmd.execute()
     return jsonify(movie.dict())
+
 
 @app.route("/movie/<movie_id>/", methods=["GET"])
 def get_movie(movie_id):
@@ -26,6 +28,7 @@ def get_movie(movie_id):
     movie = query.execute()
     return jsonify(movie.dict())
 
+
 @app.route("/movie-list/", methods=["GET"])
 def list_movies():
     """
@@ -34,6 +37,7 @@ def list_movies():
     query = ListMovies()
     movies = query.execute()
     return jsonify([movie.dict() for movie in movies])
+
 
 if __name__ == "__main__":
     app.run(debug=True)

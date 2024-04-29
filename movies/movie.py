@@ -13,13 +13,14 @@ class Movie(BaseModel):
     """
     Representa una película con operaciones para guardar y recuperar desde la base de datos.
     """
+
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     duration: int
     category: str
 
     @classmethod
-    def get_by_id(cls, movie_id: str) -> 'Movie':
+    def get_by_id(cls, movie_id: str) -> "Movie":
         """Recupera una película por su ID desde la base de datos."""
         movie = None
         con = sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db"))
@@ -35,7 +36,7 @@ class Movie(BaseModel):
         return movie
 
     @classmethod
-    def get_by_title(cls, title: str) -> 'Movie':
+    def get_by_title(cls, title: str) -> "Movie":
         """Recupera una película por su título desde la base de datos."""
         movie = None
         con = sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db"))
@@ -51,7 +52,7 @@ class Movie(BaseModel):
         return movie
 
     @classmethod
-    def list(cls) -> List['Movie']:
+    def list(cls) -> List["Movie"]:
         """Lista todas las películas disponibles en la base de datos."""
         con = sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db"))
         con.row_factory = sqlite3.Row
@@ -64,7 +65,7 @@ class Movie(BaseModel):
         con.close()
         return movies
 
-    def save(self) -> 'Movie':
+    def save(self) -> "Movie":
         """Guarda la película en la base de datos."""
         with sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db")) as con:
             cur = con.cursor()

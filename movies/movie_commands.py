@@ -7,6 +7,7 @@ from typing import List
 from pydantic import BaseModel
 from movies.movie import Movie
 
+
 class CreateMovieCommand(BaseModel):
     """
     Comando para crear una nueva película si no existe.
@@ -35,6 +36,7 @@ class CreateMovieCommand(BaseModel):
             ).save()
         return movie
 
+
 class ListMovies(BaseModel):
     """
     Comando para listar todas las películas disponibles.
@@ -48,6 +50,7 @@ class ListMovies(BaseModel):
             List[Movie]: Lista de películas.
         """
         return Movie.list()
+
 
 class GetMovieById(BaseModel):
     """

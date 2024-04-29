@@ -8,12 +8,14 @@ import pytest
 from movies.movie import Movie
 from movies.movie_commands import CreateMovieCommand, ListMovies
 
+
 @pytest.fixture(autouse=True)
 def setup_database():
     """Prepara y limpia la base de datos antes y después de cada test."""
     Movie.create_table()
     yield
     Movie.delete_rows()
+
 
 def test_create_movie():
     """Test para verificar la creación de una nueva película."""
@@ -26,6 +28,7 @@ def test_create_movie():
     assert db_movie.duration == movie.duration
     assert db_movie.category == movie.category
 
+
 def test_create_movie_already_exists():
     """Test para verificar que la película ya existente no se duplica."""
     Movie(title="Avatar", duration=178, category="Action").save()
@@ -34,6 +37,7 @@ def test_create_movie_already_exists():
     db_movie = Movie.get_by_id(movie.id)
     assert db_movie is not None
     assert db_movie.id == movie.id
+
 
 def test_list_movies():
     """Test para verificar que la lista de películas se recupera correctamente."""
