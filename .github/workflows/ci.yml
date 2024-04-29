@@ -16,6 +16,9 @@ jobs:
           sudo apt-get update -q -y
           sudo apt-get install -y python3-pip
           pip install --upgrade pip
+          pip install pylint
+          pip install bandit  # Añade bandit a la lista de instalaciones
+          pip install pytest pytest-cov  # Asegúrate de instalar pytest y cualquier otro módulo necesario
           pip install bandit black flake8 radon ruff pylint pytest pytest-cov
           pip install isort pydantic pydantic_core jsonschema Flask flask-restplus requests
           sudo apt install bc
@@ -25,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Pylint
+        run: pip install pylint
       - name: Lint with Pylint
         run: ./scripts/check_quality_pylint.sh
 
@@ -41,6 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Pytest
+        run: pip install pytest pytest-cov
       - name: Run tests
         run: ./scripts/run_tests.sh
 
@@ -57,6 +64,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Bandit
+        run: pip install bandit  # Asegúrate de instalar bandit antes de usarlo
       - name: Security analysis with Bandit
         run: ./scripts/check_quality_bandit.sh
 
