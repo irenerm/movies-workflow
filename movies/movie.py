@@ -37,7 +37,12 @@ class Movie(BaseModel):
 
     @staticmethod
     def create_table():
-        # Código para crear la tabla en la base de datos
+        """Creación de tabla."""
+        pass
+
+    @staticmethod
+    def delete_rows():
+        """Eliminación de filas."""
         pass
 
     @classmethod
