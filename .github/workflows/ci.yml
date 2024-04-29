@@ -41,6 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Black
+        run: pip install black
       - name: Format code with Black
         run: ./scripts/format_code.sh
 
