@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Pylint
+        run: pip install pylint pytest pydantic
       - name: Lint with Pylint
         run: ./scripts/check_quality_pylint.sh
 
@@ -34,6 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Black
+        run: pip install black
       - name: Format code with Black
         run: ./scripts/format_code.sh
 
@@ -42,6 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Pytest
+        run: pip install pytest pytest-cov
       - name: Run tests
         run: ./scripts/run_tests.sh
 
