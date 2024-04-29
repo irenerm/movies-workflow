@@ -85,3 +85,77 @@ class Movie(BaseModel):
             )
             con.commit()
         return self
+
+    @classmethod
+    def get_by_id(cls, movie_id: str) -> "Movie":
+        """
+        Recupera una película por su ID desde la base de datos.
+
+        Args:
+            movie_id (str): El identificador único de la película.
+
+        Returns:
+            Movie: La instancia de la película si se encuentra.
+        """
+        with sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db")) as con:
+            con.row_factory = sqlite3.Row
+            cur = con.cursor()
+            cur.execute("SELECT * FROM movies WHERE id=?", (movie_id,))
+            record = cur.fetchone()
+            return cls(**record) if record else None
+
+    @staticmethod
+    def create_table():
+        """
+        Crea la tabla de películas en la base de datos si no existe.
+        """
+        with sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db")) as con:
+            con.execute(
+                """
+                CREATE TABLE IF NOT EXISTS movies (
+                    id TEXT PRIMARY KEY,
+                    title TEXT,
+                    duration INTEGER,
+                    category TEXT
+                )
+            """
+            )
+
+    @staticmethod
+    def delete_rows():
+        """
+        Elimina todas las filas de la tabla de películas para limpiar los datos.
+        """
+        with sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db")) as con:
+            con.execute("DELETE FROM movies")
+
+    @classmethod
+    def list(cls) -> List["Movie"]:
+        """
+        Devuelve una lista de todas las películas disponibles en la base de datos.
+
+        Returns:
+            List[Movie]: Una lista de instancias de películas.
+        """
+        with sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db")) as con:
+            con.row_factory = sqlite3.Row
+            cur = con.cursor()
+            cur.execute("SELECT * FROM movies")
+            records = cur.fetchall()
+            return [cls(**record) for record in records]
+
+    def save(self) -> "Movie":
+        """
+        Guarda la película en la base de datos.
+
+        Returns:
+            Movie: La instancia de la película guardada.
+        """
+        with sqlite3.connect(os.getenv("DATABASE_NAME", "movies.db")) as con:
+            cur = con.cursor()
+            cur.execute(
+                "INSERT INTO movies (id, title, duration, category) VALUES (?, ?, ?, ?)",
+                (self.id, self.title, self.duration, self.category),
+            )
+            con.commit()
+        return self

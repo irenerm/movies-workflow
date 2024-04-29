@@ -7,22 +7,23 @@ from typing import List
 from pydantic import BaseModel, Field
 from movies.movie import Movie
 
+
 class GetMovieById(BaseModel):
     """
-    Comando para obtener una  película.
+    Comando para obtener una película por su identificador único.
 
     Attributes:
-        modelo (BaseModel): El modelo.
+        id (str): El identificador único de la película, requerido para la búsqueda.
     """
 
-    id: int = Field(..., description="The ID of the movie")
+    id: str = Field(..., description="The ID of the movie")
 
-    def execute(self):
+    def execute(self) -> Movie:
         """
-        Ejecuta el comando para obtener una  película.
+        Ejecuta la operación de búsqueda de una película utilizando su ID.
 
         Returns:
-            Movie: La película creada o encontrada.
+            Movie: La instancia de la película encontrada o None si no existe.
         """
         return Movie.get_by_id(self.id)
 
@@ -69,21 +70,3 @@ class ListMovies(BaseModel):
             List[Movie]: Lista de películas.
         """
         return Movie.list()
-
-
-class GetMovieById(BaseModel):
-    """
-    Comando para obtener una película por su identificador.
-
-    Attributes:
-        id (str): El identificador único de la película.
-    """
-
-    def execute(self) -> Movie:
-        """
-        Ejecuta el comando para obtener una película basada en su ID.
-
-        Returns:
-            Movie: La película obtenida.
-        """
-        return Movie.get_by_id(self.id)
