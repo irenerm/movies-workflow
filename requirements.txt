@@ -1,0 +1,15 @@
+bandit
+black
+flake8
+radon
+ruff
+pylint
+pytest
+pytest-cov
+isort
+pydantic
+pydantic-core
+jsonschema
+Flask
+flask-restplus
+requests
