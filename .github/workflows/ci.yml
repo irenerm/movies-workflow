@@ -1,0 +1,62 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -q -y
+          sudo apt-get install -y python3-pip
+          pip install --upgrade pip
+          pip install bandit black flake8 radon ruff pylint pytest pytest-cov
+          pip install isort pydantic pydantic_core jsonschema Flask flask-restplus requests
+          sudo apt install bc
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint with Pylint
+        run: ./scripts/check_quality_pylint.sh
+
+  format:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Format code with Black
+        run: ./scripts/format_code_black.sh
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: ./scripts/run_tests.sh
+
+  metrics:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check test coverage
+        run: ./scripts/check_test_coverage.sh
+
+  security:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Security analysis with Bandit
+        run: ./scripts/check_quality_bandit.sh
+
